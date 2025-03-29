@@ -1,13 +1,16 @@
 
-import { useState } from 'react';
+import { useContext } from 'react';
 import { motion } from 'framer-motion';
+import { ThemeContext } from '../context/ThemeContext';
 
-export default function MessageList({ messages, darkMode }) {
+export default function MessageList({ messages }) {
+  const { darkMode } = useContext(ThemeContext);
+  
   if (!messages.length) {
     return (
       <div className="text-center py-10">
-        <div className={`inline-block p-6 rounded-xl ${darkMode ? 'bg-gray-700/50' : 'bg-white/50'} shadow-lg`}>
-          <p className={`${darkMode ? 'text-gray-300' : 'text-gray-500'}`}>No messages yet. Be the first to send one!</p>
+        <div className="inline-block p-6 rounded-xl glass-effect">
+          <p>No messages yet. Be the first to send one!</p>
         </div>
       </div>
     );
@@ -21,12 +24,12 @@ export default function MessageList({ messages, darkMode }) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, delay: index * 0.1 }}
-          className={`message-card ${darkMode ? 'bg-gray-700/70 text-white' : 'bg-white/80'}`}
+          className="message-card"
         >
-          <p className={darkMode ? 'text-gray-100' : 'text-gray-800'}>{message.text}</p>
-          <div className={`mt-2 text-xs ${darkMode ? 'text-gray-400' : 'text-gray-500'} flex justify-between items-center`}>
+          <p>{message.text}</p>
+          <div className="mt-2 text-xs text-gray-500 dark:text-gray-400 flex justify-between items-center">
             <span>{new Date(message.createdAt).toLocaleString()}</span>
-            <div className={`h-2 w-2 rounded-full ${darkMode ? 'bg-primary-400' : 'bg-primary-500'}`}></div>
+            <div className="h-2 w-2 rounded-full bg-primary-500 dark:bg-primary-400"></div>
           </div>
         </motion.li>
       ))}

@@ -1,10 +1,12 @@
 
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { Send } from 'lucide-react';
+import { ThemeContext } from '../context/ThemeContext';
 
-export default function MessageForm({ onSubmit, darkMode }) {
+export default function MessageForm({ onSubmit }) {
   const [message, setMessage] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const { darkMode } = useContext(ThemeContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -28,7 +30,7 @@ export default function MessageForm({ onSubmit, darkMode }) {
         value={message}
         onChange={(e) => setMessage(e.target.value)}
         placeholder="Type your message..."
-        className={`form-input flex-1 ${darkMode ? 'bg-gray-700/50 text-white placeholder-gray-400' : ''}`}
+        className="form-input flex-1"
         disabled={isSubmitting}
       />
       <button
