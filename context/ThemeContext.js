@@ -16,12 +16,16 @@ export function ThemeProvider({ children }) {
     if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
       setDarkMode(true);
       document.body.setAttribute('data-theme', 'dark');
+    } else {
+      document.body.removeAttribute('data-theme');
     }
   }, []);
 
   const toggleDarkMode = () => {
-    setDarkMode(!darkMode);
-    if (!darkMode) {
+    const newDarkMode = !darkMode;
+    setDarkMode(newDarkMode);
+    
+    if (newDarkMode) {
       document.body.setAttribute('data-theme', 'dark');
       localStorage.setItem('theme', 'dark');
     } else {
