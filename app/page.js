@@ -50,7 +50,7 @@ export default function Home() {
   };
 
   return (
-    <main className="max-w-3xl mx-auto p-6 min-h-screen flex flex-col">
+    <main className="max-w-3xl mx-auto p-6 h-screen flex flex-col">
       <header className="mb-10 text-center relative">
         <div className="absolute -top-2 right-0">
           <button 
@@ -79,7 +79,7 @@ export default function Home() {
           </div>
         </div>
         
-        <div className="flex-1 p-6 bg-white/50 dark:bg-gray-800/50 overflow-hidden">
+        <div className="flex-1 p-6 bg-white/50 dark:bg-gray-800/50 overflow-hidden flex flex-col">
           {loading ? (
             <div className="flex justify-center items-center h-full">
               <Loader2 className="animate-spin text-primary-500" size={30} />
