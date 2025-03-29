@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { Send } from 'lucide-react';
 
-export default function MessageForm({ onSubmit }) {
+export default function MessageForm({ onSubmit, darkMode }) {
   const [message, setMessage] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -22,18 +22,18 @@ export default function MessageForm({ onSubmit }) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex items-center gap-2">
+    <form onSubmit={handleSubmit} className="flex items-center gap-3">
       <input
         type="text"
         value={message}
         onChange={(e) => setMessage(e.target.value)}
         placeholder="Type your message..."
-        className="flex-1 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+        className={`form-input flex-1 ${darkMode ? 'bg-gray-700/50 text-white placeholder-gray-400' : ''}`}
         disabled={isSubmitting}
       />
       <button
         type="submit"
-        className="btn btn-primary flex items-center justify-center"
+        className={`btn btn-primary w-12 h-12 flex items-center justify-center p-0 ${!message.trim() ? 'opacity-70' : ''}`}
         disabled={isSubmitting || !message.trim()}
       >
         {isSubmitting ? (

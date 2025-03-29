@@ -3,14 +3,53 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --color-primary-light: #f0f9ff;
+  --color-primary: #0ea5e9;
+  --color-primary-dark: #0369a1;
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-5px); }
+  100% { transform: translateY(0px); }
+}
+
 body {
   @apply text-gray-800 antialiased;
+  background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+}
+
+.glass-effect {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.floating-card {
+  @apply shadow-lg transition-all duration-300;
+  transform: translateY(0);
+}
+
+.floating-card:hover {
+  @apply shadow-xl;
+  transform: translateY(-4px);
 }
 
 .btn {
-  @apply px-4 py-2 rounded-md transition-all duration-200 font-medium focus:outline-none focus:ring-2 focus:ring-offset-2;
+  @apply px-4 py-2 rounded-full transition-all duration-300 font-medium focus:outline-none;
+  box-shadow: 0 4px 14px 0 rgba(0, 118, 255, 0.39);
 }
 
 .btn-primary {
-  @apply bg-primary-600 text-white hover:bg-primary-700 focus:ring-primary-500;
+  @apply bg-gradient-to-r from-primary-500 to-primary-600 text-white hover:shadow-lg hover:-translate-y-0.5;
+}
+
+.form-input {
+  @apply w-full px-4 py-2 rounded-full border-0 focus:outline-none focus:ring-2 focus:ring-primary-400 shadow-inner bg-white/80;
+}
+
+.message-card {
+  @apply p-5 rounded-xl shadow-md transition-all duration-300 hover:shadow-lg hover:-translate-y-1;
+  background: linear-gradient(145deg, #ffffff, #f0f0f0);
 }

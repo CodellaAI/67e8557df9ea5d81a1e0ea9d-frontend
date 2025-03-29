@@ -11,6 +11,7 @@ import MessageList from '@/components/MessageList';
 export default function Home() {
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [darkMode, setDarkMode] = useState(false);
 
   useEffect(() => {
     fetchMessages();
@@ -39,18 +40,35 @@ export default function Home() {
 
   return (
     <main className="max-w-3xl mx-auto p-6 min-h-screen flex flex-col">
-      <header className="mb-8 text-center">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Simple Connect App</h1>
-        <p className="text-gray-600">Connect your frontend and backend with ease</p>
+      <header className="mb-10 text-center relative">
+        <div className="absolute -top-2 right-0">
+          <button 
+            onClick={() => setDarkMode(!darkMode)}
+            className="p-3 rounded-full bg-white/80 shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
+          >
+            {darkMode ? '🌞' : '🌙'}
+          </button>
+        </div>
+        <h1 className="text-4xl font-bold bg-gradient-to-r from-primary-600 to-primary-400 text-transparent bg-clip-text mb-3">
+          Simple Connect App
+        </h1>
+        <p className="text-gray-600 max-w-md mx-auto">Connect your frontend and backend with a modern, floating interface</p>
       </header>
 
-      <div className="flex-1 flex flex-col shadow-lg rounded-xl bg-white overflow-hidden">
-        <div className="p-4 bg-primary-600 text-white flex items-center">
-          <MessageSquare className="mr-2" size={20} />
-          <h2 className="font-semibold">Messages</h2>
+      <div className={`flex-1 flex flex-col rounded-2xl overflow-hidden glass-effect floating-card ${darkMode ? 'bg-gray-800/80 text-white' : ''}`}>
+        <div className={`p-4 ${darkMode ? 'bg-primary-800' : 'bg-gradient-to-r from-primary-500 to-primary-600'} text-white flex items-center justify-between`}>
+          <div className="flex items-center">
+            <MessageSquare className="mr-2" size={20} />
+            <h2 className="font-semibold">Messages</h2>
+          </div>
+          <div className="flex space-x-2">
+            <div className="w-3 h-3 rounded-full bg-red-400"></div>
+            <div className="w-3 h-3 rounded-full bg-yellow-400"></div>
+            <div className="w-3 h-3 rounded-full bg-green-400"></div>
+          </div>
         </div>
         
-        <div className="flex-1 overflow-y-auto p-4">
+        <div className={`flex-1 overflow-y-auto p-6 ${darkMode ? 'bg-gray-800/50' : 'bg-white/50'}`}>
           {loading ? (
             <div className="flex justify-center items-center h-full">
               <Loader2 className="animate-spin text-primary-500" size={30} />
@@ -62,14 +80,18 @@ export default function Home() {
               enterFrom="opacity-0"
               enterTo="opacity-100"
             >
-              <MessageList messages={messages} />
+              <MessageList messages={messages} darkMode={darkMode} />
             </Transition>
           )}
         </div>
         
-        <div className="border-t border-gray-200 p-4">
-          <MessageForm onSubmit={handleSubmit} />
+        <div className={`p-5 ${darkMode ? 'border-t border-gray-700' : 'border-t border-gray-200/50'}`}>
+          <MessageForm onSubmit={handleSubmit} darkMode={darkMode} />
         </div>
+      </div>
+
+      <div className="mt-6 text-center text-sm text-gray-500">
+        <p>Modern UI implementation • {new Date().getFullYear()}</p>
       </div>
     </main>
   );
