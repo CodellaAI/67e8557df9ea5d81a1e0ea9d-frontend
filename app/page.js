@@ -33,10 +33,19 @@ export default function Home() {
   const handleSubmit = async (text) => {
     try {
       const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/messages`, { text });
-      // Prepend the new message to maintain correct order (since API returns in descending order)
+      // Add the new message to the list (API returns in descending order)
       setMessages([response.data, ...messages]);
     } catch (error) {
       console.error('Error sending message:', error);
+    }
+  };
+
+  const handleClearMessages = async () => {
+    try {
+      await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/api/messages`);
+      setMessages([]);
+    } catch (error) {
+      console.error('Error clearing messages:', error);
     }
   };
 
@@ -70,7 +79,7 @@ export default function Home() {
           </div>
         </div>
         
-        <div className="flex-1 overflow-y-auto p-6 bg-white/50 dark:bg-gray-800/50">
+        <div className="flex-1 p-6 bg-white/50 dark:bg-gray-800/50 overflow-hidden">
           {loading ? (
             <div className="flex justify-center items-center h-full">
               <Loader2 className="animate-spin text-primary-500" size={30} />
@@ -81,8 +90,9 @@ export default function Home() {
               enter="transition-opacity duration-300"
               enterFrom="opacity-0"
               enterTo="opacity-100"
+              className="h-full"
             >
-              <MessageList messages={messages} />
+              <MessageList messages={messages} onClearMessages={handleClearMessages} />
             </Transition>
           )}
         </div>
