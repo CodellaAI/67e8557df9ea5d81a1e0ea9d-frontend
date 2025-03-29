@@ -33,7 +33,8 @@ export default function Home() {
   const handleSubmit = async (text) => {
     try {
       const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/messages`, { text });
-      setMessages([...messages, response.data]);
+      // Prepend the new message to maintain correct order (since API returns in descending order)
+      setMessages([response.data, ...messages]);
     } catch (error) {
       console.error('Error sending message:', error);
     }
